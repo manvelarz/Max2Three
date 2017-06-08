@@ -17,10 +17,10 @@ rollout Connection "Commit " width:263 height:88
 	--checkbox chk1 "Checkbox" pos:[18,55] width:17 height:17 checked:true --(execute ultimo_Mananger_Access_Chek)
 	on edt1 entered text do		message = text
 	on Commit pressed do(		
-		message = "message generated from Maxscript"
+		if message == "" then message= "message generated from Maxscript"
 		dir = maxfilepath +"Maxscript git\\Max2Three"
-		ShellLaunch "cmd"  ("/k cd "+dir +"  && git add ." )
-		ShellLaunch "cmd"  ("/k cd "+dir +"  && git status" )
+		--ShellLaunch "cmd"  ("/k cd "+dir +"  && git add ." )
+		--ShellLaunch "cmd"  ("/k cd "+dir +"  && git status" )
 		ShellLaunch "cmd"  ("/k cd "+dir +"  && git commit -a -m \""+message+"" )
 		ShellLaunch "cmd"  ("/k cd "+dir +"  && git push" )
 		)
