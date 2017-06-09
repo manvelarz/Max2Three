@@ -7,7 +7,7 @@
 try(closeRolloutFloater rof) catch()
 rof=newrolloutfloater "Commit message" 270 400 500 500
 Global message = ""	
-	
+dir = ""
 rollout Connection "Commit " width:263 height:88
 	(
 	edittext edt1 "" text:""  pos:[10,28] width:230 height:68 readOnly:false -- text:ultimo_Mananger_Access_ip
@@ -22,11 +22,10 @@ rollout Connection "Commit " width:263 height:88
 		dir = maxfilepath +"Maxscript git\\Max2Three"
 		--ShellLaunch "cmd"  ("/k cd "+dir +"  && git add ." )
 		--ShellLaunch "cmd"  ("/k cd "+dir +"  && git status" )
-		ShellLaunch "cmd"   ("/k cd "+dir +"  && git commit -a -m \""+message+"" )
-
+		ShellLaunch "cmd"  ("/k cd "+dir +" && git commit -a -m \""+message+"" )
 		)
 		on Gitpush pressed do(		
-			ShellLaunch "cmd"  ("cd "+dir +"\r\n git push")
+			ShellLaunch "cmd"  ("/k cd \""+dir +"\  && git push" )
 		)
 		
 	on chk1 changed  Automat do(
