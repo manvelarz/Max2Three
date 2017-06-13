@@ -1,4 +1,21 @@
-﻿liArray = for l in lights where classof l == Omnilight collect  l
+﻿
+function lodeCubeMaps varname = (
+	txt = "\n"
+	txt += "//Cubemap\n"
+	txt += "var urls = [ \"textures/posx.jpg\", \"textures/negx.jpg\", \"textures/posy.jpg\", \"textures/negy.jpg\", \"textures/posz.jpg\", \"textures/negz.jpg\" ];\n"
+
+	txt+=varname + " = new THREE.CubeTextureLoader().load( urls );\n"
+	txt+=varname + ".format = THREE.RGBFormat;\n"
+	txt+=varname +".mapping = THREE.CubeReflectionMapping;\n"
+
+--		format "%" txt to:allMaps
+	
+	)
+	 
+
+
+
+liArray = for l in lights where classof l == Omnilight collect  l
 
 
 

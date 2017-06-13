@@ -32,81 +32,68 @@ fn addAmbientLight = (
 	
 	)
 
-	fn colorToHex c=
-	(
-		ret = "0x"
-		h = bit.intashex c.r
-		if h.count < 2 then
-		(
-			h = ("0"+h)
-		)
-		ret+= h
-
-		h = bit.intashex c.g
-		if h.count < 2 then
-		(
-			h = ("0"+h)
-		)
-		ret+= h
-
-		h = bit.intashex c.b
-		if h.count < 2 then
-		(
-			h = ("0"+h)
-		)
-		ret+= h
-		ret
+fn colorToHex c=
+(
+	ret = "0x"
+	h = bit.intashex c.r
+	if h.count < 2 then	(
+		h = ("0"+h)
 	)
+	ret+= h
 
-
-	fn hexToColor h=
-	(
-		if h[1] == "#" then
-		(
-			if h.count == 7 then
-			(
-				colorArray = #()
-				for i = 2 to 6 by 2 do
-				(
-					hexString = subString h i 2
-					cv = (("0X"+hexString) as integer)
-					if cv != undefined then
-					(
-						append colorArray cv
-					)
-					else 
-					(
-						format "invalid hex string supplied\n"
-						return undefined
-					)
-				)
-				c = color colorArray[1] colorArray[2] colorArray[3]
-			)
-		)
-		else
-		(
-			if h.count == 6 then
-			(
-				colorArray = #()
-				for i = 1 to 5 by 2 do
-				(
-					hexString = subString h i 2
-					cv = (("0X"+hexString) as integer)
-					if cv != undefined then
-					(
-						append colorArray cv
-					)
-					else 
-					(
-						format "invalid hex string supplied\n"
-						return undefined
-					)
-				)
-				c = color colorArray[1] colorArray[2] colorArray[3]
-			)
-		)
-		c
+	h = bit.intashex c.g
+	if h.count < 2 then	(
+		h = ("0"+h)
 	)
+	ret+= h
+
+	h = bit.intashex c.b
+	if h.count < 2 then	(
+		h = ("0"+h)
+	)
+	ret+= h
+	ret
+)
+
+
+fn hexToColor h=
+(
+	if h[1] == "#" then	(
+		if h.count == 7 then (
+			colorArray = #()
+			for i = 2 to 6 by 2 do	(
+				hexString = subString h i 2
+				cv = (("0X"+hexString) as integer)
+				if cv != undefined then (
+					append colorArray cv
+				)
+				else 	(
+					format "invalid hex string supplied\n"
+					return undefined
+				)
+			)
+			c = color colorArray[1] colorArray[2] colorArray[3]
+		)
+	)
+	else	(
+		if h.count == 6 then (
+			colorArray = #()
+			for i = 1 to 5 by 2 do (
+				hexString = subString h i 2
+				cv = (("0X"+hexString) as integer)
+				if cv != undefined then (
+					append colorArray cv
+				)
+				else 	(
+					format "invalid hex string supplied\n"
+					return undefined
+				)
+			)
+			c = color colorArray[1] colorArray[2] colorArray[3]
+		)
+	)
+	c
+)
 
 fn CopyMapsandGenerateCode =( -- TODO  hay problema con nombres de texturas que tienen espacio y que empiezan con numero
 		for m in BitMapsNames where m!= undefined do (
@@ -128,7 +115,6 @@ function maps fname varname NameExp= (
 	txt+=varname + ".needsUpdate = true;\n"
 	txt+=varname +".wrapS = "+varname+".wrapT = THREE.RepeatWrapping;\n"
 	txt += "} );\n\n"
-	jj +=1
 		format "%" txt to:allMaps
 
 	)

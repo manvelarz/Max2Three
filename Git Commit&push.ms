@@ -3,38 +3,82 @@
 	toolTip:"Add commit and push to github"
 	ButtonText:"GitPush"
 (
-
+Global IniPath = (getDir #temp + "\\Git_info.ini")
+Global Git_repo_Path = GetINISetting IniPath "LastGitFolder" "Path"
+Global RepoFolderName = GetINISetting IniPath "LastGitFolder" "Folder"
 try(closeRolloutFloater rof) catch()
-rof=newrolloutfloater "Commit message" 270 400 500 500
+rof=newrolloutfloater "Git" 280 400 500 500
 Global message = ""	
 dir = ""
-rollout Connection "Commit " width:263 height:88
-	(
-	edittext edt1 "" text:""  pos:[10,28] width:230 height:68 readOnly:false -- text:ultimo_Mananger_Access_ip
-	button Commit "Commit with message" pos:[13,103] width:230 height:23
-	button Gitpush "Push to github" pos:[13,150] width:230 height:43
-	GroupBox grp1 "Enter a message and commit" pos:[6,5] width:247 height:130
-	--label lbl2 "Automatic Search" pos:[46,57] width:146 height:16
-	--checkbox chk1 "Checkbox" pos:[18,55] width:17 height:17 checked:true --(execute ultimo_Mananger_Access_Chek)
-	on edt1 entered text do		message = text
-	on Commit pressed do(		
-		if message == "" then message= "message generated from Maxscript"
-		dir = maxfilepath +"Maxscript git\\Max2Three"
-		--ShellLaunch "cmd"  ("/k cd "+dir +"  && git add ." )
-		--ShellLaunch "cmd"  ("/k cd "+dir +"  && git status" )
-		ShellLaunch "cmd"  ("/k cd "+dir +" && git commit -a -m \""+message+"" )
+	
+	
+fn Git_folder = (
+	thePath = getSavepath initialDir:(maxfilepath)
+	if thePath != undefined then (
+		gitFolderExist = false
+		for d in getDirectories (thePath+"\\*") do (
+			a = filterString d "\\"
+			if  a[a.count] == ".git" then (
+				gitFolderExist = true
+				RepoFolderName = a[a.count-1]
+				print RepoFolderName
+				)
+				else gitFolderExist = false
 		)
-		on Gitpush pressed do(		
-			ShellLaunch "cmd"  ("/k cd \""+dir +"\  && git push" )
-		)
+		if gitFolderExist then (
+			setINISetting IniPath "LastGitFolder" "Path" thePath
+			setINISetting IniPath "LastGitFolder" "Folder" RepoFolderName
+			format "actual git folder is %" thePath
+			for r in rof.rollouts where r.name == "RepoRollout" do( 
+				r.open=false
+				r.title = "Repo-->  " + RepoFolderName
+				r.Tgfolder.text = thePath
+				)
+			return thePath
+			) 
+			else (
+			messagebox "You need to select proper Git folder (Repo)\n\nThe script take a look if there are a '.git' folder\n inside of the selected folder" title:"Alert"
+			return ""
+			)
 		
-	on chk1 changed  Automat do(
-			 )
-
-	
+	)
 )
-	addrollout Connection  rof
 	
+	
+rollout RepoRollout "Repository" width:290 height:328
+	(
+		group "Set/Change Git directory" (
+			edittext Tgfolder RepoFolderName  text:Git_repo_Path  readOnly:true labelOnTop:true--enabled:true -- align:#left
+			button 'Select_Git_Folder' "Select Git Folder(Repo)" pos:[16,88] width:232 height:24 align:#left
+			on Select_Git_Folder pressed do 
+				Git_folder()
+		)	
+	)
+rollout CommitAndPushRollout "Commit local repository" width:290 height:328
+	(
+		group "Enter a message for commit" (
+			edittext tMessage "" pos:[16,24] width:232  height:56 readOnly:false align:#left -- text:ultimo_Mananger_Access_ip   
+			button btnCommit "Commit with message" pos:[16,88] width:232 height:23 enabled:false align:#left
+			on tMessage  changed text do(
+				message = text
+				btnCommit.enabled = on
+				)
+			on btnCommit pressed do
+			(		
+				if message == "" then message= "message generated from Maxscript"
+				dir = maxfilepath +"Maxscript git\\Max2Three"
+				ShellLaunch "cmd"  ("/k cd "+dir +" && git commit -a -m \""+message+"" )
+				)
+		)
+		button 'Gitpush' "Push to github"  width:248 height:43 align:#center
+		on Gitpush pressed do
+		(		
+			ShellLaunch "cmd"  ("/k cd "+dir +"  && git push" )
+		)
+		on CommitAndPush open do closerollout 
+	)
 
-
+	addrollout RepoRollout  rof
+	addrollout CommitAndPushRollout   rof
+	for r in rof.rollouts where r.name == "RepoRollout" do( r.open=false; r.title = "Actual repo is -->  " + RepoFolderName)
 )
