@@ -2,9 +2,9 @@
  
  filein "htmString.ms"
  CopyMapsandGenerateCode()
-ShelltoStandartAndRevers true
+--ShelltoStandartAndRevers true
 exportFile (getFilenamepath out_name+ "/obj/"+getFilenameFile maxfilename+".obj" ) #noPrompt using:ObjExp
-ShelltoStandartAndRevers false
+--ShelltoStandartAndRevers false
 --makedir (dir+ "/textures/")
 
 

@@ -71,24 +71,7 @@ a = meditmaterials[24]
 show a.bakedMaterial
 a.bakedMaterial.diffuse = black
 matTemp[1]
-fn ShelltoStandartAndRevers fromShell =  (
-	if fromShell then (
-		global matTemp = #()
-		for o in objects where o.material != undefined and classof o.material == Shell_Material do (
-			MatObjPair = #()
-			append MatObjPair o
-			append MatObjPair o.material
-			append matTemp MatObjPair
-			format "__ % ------% \n"  o.name o.material
-			o.material = o.material.bakedMaterial
-			)
-		)
-		Else(
-				for i = 1 to matTemp.count do (
-				matTemp[i][1].material = matTemp[i][2]
-				)
-			)
-	)
+
 
 
 --***************************************

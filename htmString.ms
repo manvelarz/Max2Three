@@ -12,6 +12,38 @@ allMaps = "" as stringStream
 
 CopyMapsandGenerateCode()
 
+fn ShelltoStandartAndRevers fromShell =  (
+	if fromShell then (
+		global matTemp = #()
+		for o in objects where o.material != undefined and classof o.material == Shell_Material do (
+			MatObjPair = #()
+			append MatObjPair o
+			append MatObjPair o.material
+			append matTemp MatObjPair
+			format "__ % ------% \n"  o.name o.material
+			o.material = o.material.bakedMaterial
+			)
+		)
+		Else(
+				for i = 1 to matTemp.count do (
+				matTemp[i][1].material = matTemp[i][2]
+				)
+			)
+	)
+
+function maps fname varname NameExp= (
+	txt = "\n"
+	txt += "var "+ varname +" = new THREE.Texture();\n"
+	txt+="var loader = new THREE.ImageLoader( manager );\n"
+	txt+="loader.load( 'obj/" +  NameExp + "', function ( image ) {\n"
+	txt+=varname + ".image = image;\n"
+	txt+=varname + ".needsUpdate = true;\n"
+	txt+=varname +".wrapS = "+varname+".wrapT = THREE.RepeatWrapping;\n"
+	txt += "} );\n\n"
+	jj +=1
+		format "%" txt to:allMaps
+
+	)
 --free allMaps 
 fn pointlightNew  =(
 	liArray = for l in lights where classof l == Omnilight collect  l
@@ -99,7 +131,7 @@ fn CopyMapsandGenerateCode =( -- TODO  hay problema con nombres de texturas que 
 		for m in BitMapsNames where m!= undefined do (
 		tempNameExp	 = filenameFromPath m
 		tempname =getFilenameFile( tempNameExp)
-		copyFile m (dir+ "/obj/" + tempNameExp)
+		copyFile m (dir+ "/textures/" + tempNameExp)
 		maps tempname tempname tempNameExp
 			
 		)
