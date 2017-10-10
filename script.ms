@@ -1,7 +1,7 @@
 ﻿-- *** All the Omnis from the scene translslate to html as PointLights passing the position, Color and , Multiplier parameters
  
  filein "htmString.ms"
- CopyMapsandGenerateCode()
+ --CopyMapsandGenerateCode()
 --ShelltoStandartAndRevers true
 exportFile (getFilenamepath out_name+ "/obj/"+getFilenameFile maxfilename+".obj" ) #noPrompt using:ObjExp
 --ShelltoStandartAndRevers false
@@ -21,4 +21,4 @@ ShellLaunch "cmd"  ("/k cd "+dir +"  && http-server" )
 
 ShellLaunch ("http://127.0.0.1:8080/"+htmName) ""
 
---for i = 4001 to 4069 do format  ("http://bubblegum.agency/documentos/cv/" +i as string + ".pdf\n")0
+--for i = 4001 to 4069 do format  ("http://bubblegum.agency/documentos/cv/" +i as string + ".pdf\n")0scope

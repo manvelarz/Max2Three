@@ -10,7 +10,7 @@ out_name = (dir+"/"+htmName )
 allMaps = "" as stringStream
  
 
-CopyMapsandGenerateCode()
+--CopyMapsandGenerateCode()
 
 fn ShelltoStandartAndRevers fromShell =  (
 	if fromShell then (
@@ -133,7 +133,7 @@ fn CopyMapsandGenerateCode =( -- TODO  hay problema con nombres de texturas que 
 		tempname =getFilenameFile( tempNameExp)
 		copyFile m (dir+ "/textures/" + tempNameExp)
 		maps tempname tempname tempNameExp
-			
+		print m	
 		)
 	)
 
@@ -251,10 +251,10 @@ html =
 				//controls.addEventListener( 'change', render ); // add this only if there is no animation loop (requestAnimationFrame)
 				controls.target.y = 0;
 				controls.enableDamping = true;
-				controls.dampingFactor = 0.15;
+				controls.dampingFactor = 0.5;
 				controls.enableZoom = true;
 				controls.autoRotate = true;
-				controls.autoRotateSpeed = 0.2;
+				controls.autoRotateSpeed = 0.5;
 				//controls.maxPolarAngle = Math.PI/1.85;
 				controls.enablePan = true;
                 
