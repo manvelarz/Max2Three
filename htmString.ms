@@ -31,19 +31,7 @@ fn ShelltoStandartAndRevers fromShell =  (
 			)
 	)
 
-function maps fname varname NameExp= (
-	txt = "\n"
-	txt += "var "+ varname +" = new THREE.Texture();\n"
-	txt+="var loader = new THREE.ImageLoader( manager );\n"
-	txt+="loader.load( 'obj/" +  NameExp + "', function ( image ) {\n"
-	txt+=varname + ".image = image;\n"
-	txt+=varname + ".needsUpdate = true;\n"
-	txt+=varname +".wrapS = "+varname+".wrapT = THREE.RepeatWrapping;\n"
-	txt += "} );\n\n"
-	jj +=1
-		format "%" txt to:allMaps
 
-	)
 --free allMaps 
 fn pointlightNew  =(
 	liArray = for l in lights where classof l == Omnilight collect  l
