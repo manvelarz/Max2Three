@@ -127,18 +127,20 @@ fn hexToColor h=
 	c
 )
 
-fn CopyMapsandGenerateCode =( -- TODO  hay problema con nombres de texturas que tienen espacio y que empiezan con numero
+fn CopyMaps =( -- TODO  hay problema con nombres de texturas que tienen espacio y que empiezan con numero
 		for m in BitMapsNames where m!= undefined do (
 		tempNameExp	 = filenameFromPath m
 		tempname =getFilenameFile( tempNameExp)
-		copyFile m (dir+ "/textures/" + tempNameExp)
-		maps tempname tempname tempNameExp
+		newPath = dir+ "/textures/" + tempNameExp	
+		copyFile m newPath
+		print ("New--> "+newPath	)
+		GenerateCodeForMaps tempname tempname tempNameExp
 		print m	
 		)
 	)
 
 			
-function maps fname varname NameExp= (
+function GenerateCodeForMaps fname varname NameExp= (
 	txt = "\n"
 	txt += "var "+ varname +" = new THREE.Texture();\n"
 	txt+="var loader = new THREE.ImageLoader( manager );\n"

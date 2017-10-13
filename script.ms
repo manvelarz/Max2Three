@@ -1,4 +1,6 @@
 ﻿-- *** All the Omnis from the scene translslate to html as PointLights passing the position, Color and , Multiplier parameters
+--*** Ambient light is passing to threejs
+--**INFO** when you export wit this tool the textures are exported at this moment with OBJ exporters. Is deseable to change the path of exported textures from defoult "./textures/" to "../textures/", you can do it from OBJ Export Options/ Materials/Map-export...
  
  filein "htmString.ms"
  --CopyMapsandGenerateCode()
